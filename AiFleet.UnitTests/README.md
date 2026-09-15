@@ -19,7 +19,7 @@ Why It Helps AI Agents: AI coding agents excel at writing implementations when g
 ---  
 
 ## Exercises
-This repository contains 20 exercises. They vary in difficulty, and description. The further along you get, the less handrails will be present and the more you will have to lean on the previous exercises as examples.
+This repository contains 16 exercises. They vary in difficulty, and description. The further along you get, the less handrails will be present and the more you will have to lean on the previous exercises as examples.
 
 ### Exercises 1-5
 These exercises are found in the BasicAiFleetServiceTests.cs and the logic should be implemented in the BasicAiFleetService.cs. The tests are written, but you will have to add the functions and logic to make the tests pass.
@@ -108,3 +108,22 @@ These exercises should be created in the AiFleetOperationsServiceTests.cs and th
 - Scenario: Protect agents from malicious prompt injection attacks hidden in user code files.
 - Expected Handling: Write ```ContainsForbiddenTokens(string promptText)```. If promptText contains "IGNORE PREVIOUS INSTRUCTIONS" or "SYSTEM PROMPT:" (case-insensitive), return true. Otherwise, return false. Make sure to return false if null or empty.
 
+### Exercises 17-20
+These exercises are difficult and requires knowledge about Stubs and Interfaces. Create ```AiFleetBillingService.cs```and Create ```AiFleetBillingServiceTests.cs```
+
+#### 17: Batch API Night Discount
+- Scenario: Overnight batch jobs (dispatched between 22:00 and 04:00 UTC) receive a 50% discount.
+- Expected Handling: Write ```CalculateBatchJobCost(int totalTokens)``` in AiFleetBillingService.cs. Standard rate is $0.02 per 1,000 tokens. If clock hour is >= 22$ or $< 4$, apply a 50% discount.
+- Test Requirement: Freeze stub at 23:00 UTC. Verify 100,000 tokens returns $1.00m (instead of $2.00).
+#### 18: Weekend Standby Surcharge
+- Scenario: Keeping dedicated GPU nodes reserved over the weekend incurs an infrastructure surcharge.
+- Expected Handling: Update ```CalculateBatchJobCost```. If _clock.UtcNow.DayOfWeek is Saturday or Sunday, add a flat $10.00 standby surcharge (+ 10.00m) to the bill.
+- Test Requirement: Freeze stub on a Saturday at 14:00 UTC. Verify 100,000 tokens returns $12.00m ($2.00 base + $10.00 fee).
+#### 19: End-of-Month Token Rollover Expiration
+- Scenario: Unused monthly prompt credits expire on the last day of the calendar month at midnight.
+- Expected Handling: Write ```AreUnusedCreditsExpired()``` in AiFleetBillingService.cs. Return true if _clock.UtcNow.Day equals the last day of the current month.
+- Test Requirement: Freeze stub on 2026-09-30 (September 30th) -> Expect true. Freeze on 2026-09-15 -> Expect false.
+#### 20: Peak Hour Compute Surge Multiplier
+- Scenario: High demand during peak business hours (14:00 to 18:00 UTC on weekdays) triggers a 1.5x pricing surge.
+- Expected Handling: Write ```CalculateSurgeCost(decimal baseCost)``` in AiFleetBillingService.cs. If the day is Monday–Friday AND the hour is between 14:00 and 17:59 UTC, return baseCost * 1.5m. Otherwise, return baseCost.
+- Test Requirement: Freeze stub on a Tuesday at 15:00 UTC. Pass $10.00m base cost $\rightarrow$ Expect $15.00m.
