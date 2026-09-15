@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/AiFleet.core/">
+    <Project Path="AiFleet.core/AiFleet.Core.csproj" />
+  </Folder>
+  <Project Path="AiFleet.UnitTests/AiFleet.UnitTests.csproj" />
+</Solution>
