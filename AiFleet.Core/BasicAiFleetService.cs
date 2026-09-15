@@ -6,26 +6,29 @@ public class BasicAiFleetService
 {
     public static int CombineTokenCounts(int tokensA, int tokensB)
     {
-        throw new NotImplementedException(); // replace this with your implementation
+        return tokensA + tokensB;
     }
 
     public static int SecondsToExecutionMinutes(int seconds)
     {
-        throw new NotImplementedException(); // replace this with your implementation
+        return seconds / 60;
     }
 
     public static bool HasSufficientCredits(double creditBalance)
     {
-        throw new NotImplementedException(); // replace this with your implementation
+        if (creditBalance < 10.0) 
+            return false;
+
+        return true;
     }
 
     public static decimal CalculateStandardComputeCost(int runtimeMinutes)
     {
-        throw new NotImplementedException(); // replace this with your implementation
+        return runtimeMinutes * 0.50m;
     }
 
     public static string FormatAgentCallsign(int agentId, string modelName)
     {
-        throw new NotImplementedException(); // replace this with your implementation
+        return $"AGENT-{agentId}: {modelName}";
     } 
 }
