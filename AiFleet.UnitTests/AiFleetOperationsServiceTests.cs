@@ -86,4 +86,19 @@ public class AiFleetOperationsServiceTests
         
         Assert.Equal(expected, result);
     }
+    
+    //Exercise 13
+    [Theory]
+    [InlineData(10, "ENTERPRISE", true)]
+    [InlineData(11, "ENTERPRISE", false)]
+    [InlineData(4, "PRO", true)]
+    [InlineData(5, "PRO", false)]
+    [InlineData(1, "FREE", true)]
+    [InlineData(2, "FREE", false)]
+    public void CanExecuteParallelTools_RespectPlanLimits(
+        int requestedTools, string planTier, bool expected)
+    {
+        bool result = AiFleetOperationsService.CanExecuteParallelTools(requestedTools, planTier);
+        Assert.Equal(expected, result);
+    }
 }

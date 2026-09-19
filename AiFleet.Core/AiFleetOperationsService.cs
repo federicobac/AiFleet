@@ -72,4 +72,18 @@ public class AiFleetOperationsService
     {
         return currentTokens >= maxLimit * 0.8m;
     }
+
+    //Exercise 13
+    public static bool CanExecuteParallelTools(int requestedTools, string planTier)
+    {
+        int maxTools = planTier switch
+        {
+            "ENTERPRISE" => 10,
+            "PRO" => 4,
+            "FREE" => 1,
+            _ => 0
+        };
+        
+        return requestedTools <= maxTools;
+    }
 }
