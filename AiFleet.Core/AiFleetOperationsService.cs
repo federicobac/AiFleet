@@ -106,4 +106,17 @@ public class AiFleetOperationsService
         
         return sampleCount >= 100 && sampleCount <= 10000;
     }
+
+    //Exercise 16
+    public static bool ContainsForbiddenTokens(string? promptText)
+    {
+        if (string.IsNullOrEmpty(promptText))
+            return false;
+        
+        return promptText.Contains(
+            "IGNORE PREVIOUS INSTRUCTIONS",
+            StringComparison.OrdinalIgnoreCase) ||
+               promptText.Contains("SYSTEM PROMPT:",
+                   StringComparison.OrdinalIgnoreCase);
+    }
 }
