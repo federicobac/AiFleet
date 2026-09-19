@@ -56,6 +56,7 @@ public class AiFleetOperationsService
         };
     }
 
+    //Exercise 11
     public static decimal CalculateCachedPromptCost(int totalTokens, bool isCached)
     {
         decimal cost = totalTokens / 1000m * 0.02m;
@@ -64,5 +65,11 @@ public class AiFleetOperationsService
             cost *= 0.5m;
 
         return cost;
+    }
+    
+    //Exercise 12
+    public static bool ShouldCompressContext(int currentTokens, int maxLimit)
+    {
+        return currentTokens >= maxLimit * 0.8m;
     }
 }

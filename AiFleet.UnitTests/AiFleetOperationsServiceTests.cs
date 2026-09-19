@@ -72,4 +72,18 @@ public class AiFleetOperationsServiceTests
         Assert.Equal(expected, result);
     }
 
+    //Exercise 12
+    [Theory]
+    [InlineData(800, 1000, true)]
+    [InlineData(900, 1000, true)]
+    [InlineData(799, 1000, false)]
+    [InlineData(500, 1000, false)]
+    public void ShouldCompressContext_TriggersAtEightyPercent(
+        int currentTokens, int maxLimit, bool expected)
+    {
+        bool result =
+            AiFleetOperationsService.ShouldCompressContext(currentTokens, maxLimit);
+        
+        Assert.Equal(expected, result);
+    }
 }
