@@ -101,4 +101,18 @@ public class AiFleetOperationsServiceTests
         bool result = AiFleetOperationsService.CanExecuteParallelTools(requestedTools, planTier);
         Assert.Equal(expected, result);
     }
+    
+    //Exercise 14
+    [Theory]
+    [InlineData(0, 0)]
+    [InlineData(4, 0)]
+    [InlineData(5, 30)]
+    [InlineData(10, 30)]
+    [InlineData(11, 120)]
+    public void GetCoolDownSeconds_ReturnsCorrectCooldown(
+        int consecutiveExecutions, int expected)
+    {
+        int result = AiFleetOperationsService.GetCoolDownSeconds(consecutiveExecutions);
+        Assert.Equal(expected, result);
+    }
 }

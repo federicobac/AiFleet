@@ -86,4 +86,15 @@ public class AiFleetOperationsService
         
         return requestedTools <= maxTools;
     }
+
+    //Exercise 14
+    public static int GetCoolDownSeconds(int consecutiveExecutions)
+    {
+        return consecutiveExecutions switch
+        {
+            < 5 => 0,
+            <= 10 => 30,
+            _ => 120
+        };
+    }
 }
