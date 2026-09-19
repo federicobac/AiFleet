@@ -97,4 +97,13 @@ public class AiFleetOperationsService
             _ => 120
         };
     }
+
+    //Exercise 15
+    public static bool IsValidDatasetSize(int sampleCount)
+    {
+        if (sampleCount < 0)
+            throw new ArgumentException("Sample count cannot be negative");
+        
+        return sampleCount >= 100 && sampleCount <= 10000;
+    }
 }

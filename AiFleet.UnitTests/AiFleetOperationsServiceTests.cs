@@ -115,4 +115,27 @@ public class AiFleetOperationsServiceTests
         int result = AiFleetOperationsService.GetCoolDownSeconds(consecutiveExecutions);
         Assert.Equal(expected, result);
     }
+    
+    //Exercise 15
+    [Theory]
+    [InlineData(100, true)]
+    [InlineData(500, true)]
+    [InlineData(10000, true)]
+    [InlineData(99, false)]
+    [InlineData(10001, false)]
+    public void IsValidDatasetSize_ValidatesSampleRange(
+        int sampleCount, bool expected)
+    {
+        bool result = AiFleetOperationsService.IsValidDatasetSize(sampleCount);
+        Assert.Equal(expected, result);
+    }
+
+    [Theory]
+    [InlineData(-1)]
+    [InlineData(-100)]
+    public void IsValidDatasetSize_ThrowsForNegativeValues(int sampleCount)
+    {
+        Assert.Throws<ArgumentException>(() => 
+            AiFleetOperationsService.IsValidDatasetSize(sampleCount));
+    }
 }
