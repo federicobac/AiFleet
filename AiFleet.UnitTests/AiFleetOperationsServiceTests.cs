@@ -56,4 +56,20 @@ public class AiFleetOperationsServiceTests
         string result = AiFleetOperationsService.SelectModelTier(rating);
         Assert.Equal(expected, result);
     }
+    
+    //Exercise 11
+    [Theory]
+    [InlineData(1000, false, 0.02)]
+    [InlineData(1000, true, 0.01)]
+    [InlineData(100000, false, 2.00)]
+    [InlineData(100000, true, 1.00)]
+    public void CalculateCachedPromptCost_AppliesCacheDiscount(
+        int totalTokens, bool isCached, decimal expected)
+    {
+        decimal result = AiFleetOperationsService.CalculateCachedPromptCost(
+            totalTokens, isCached);
+        
+        Assert.Equal(expected, result);
+    }
+
 }

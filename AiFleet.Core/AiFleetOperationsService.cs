@@ -5,7 +5,7 @@ public class AiFleetOperationsService
     //Exercise 6
     public static decimal CalculateTokenCost(int input, int output)
     {
-        return (input / 1000m * 0.01m) + (output / 1000m * 0.03m);;
+        return (input / 1000m * 0.01m) + (output / 1000m * 0.03m);
     }
 
     //Exercise 7
@@ -54,5 +54,15 @@ public class AiFleetOperationsService
             <= 3 => "MINI",
             _ => "REASONING"
         };
+    }
+
+    public static decimal CalculateCachedPromptCost(int totalTokens, bool isCached)
+    {
+        decimal cost = totalTokens / 1000m * 0.02m;
+
+        if (isCached)
+            cost *= 0.5m;
+
+        return cost;
     }
 }
