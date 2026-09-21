@@ -31,9 +31,45 @@ These exercises are found in the AiFleetIntegrationServiceTests.cs and the logic
 ### Exercises 5-8
 These exercises should be created in the AiFleetIntegrationServiceTests.cs and the logic should be implemented in the AiFleetIntegrationService.cs. These exercises will have the Test Header (Signature and Attributes). Your job is to fill in the test body, stub and interface, and then write the code to make it pass.
 
-#### 5: Currency Conversion Rate Double
-- Scenario: Convert USD billing totals into foreign currencies using a stubbed exchange rate provider.
-Interface should contain:  ```decimal GetExchangeRate(string currencyCode); ```
+#### 5: Retry Policy Guard on Flaky External API
+- Scenario: Handle a flaky external model registry that fails on the first attempt but succeeds on retry.
 
-Expected Handling: Implement FixedExchangeRateStub in UnitTests/Stubs/. Write ```ConvertInvoiceToCurrency(decimal amountInUsd, string targetCurrency)```. Fetch rate using _exchangeRateProvider.GetExchangeRate(targetCurrency) and return amountInUsd * rate.
+Implement FlakyModelRegistryStub that throws HttpRequestException on call #1 and succeeds on call #2. Write ```RegisterWithRetry(string agentName)```. Attempt call up to 2 times; catch exception on first failure, retry once, and return bool.
+```csharp 
+[Fact]
+public void RegisterWithRetry_FlakyService_RetriesAndSucceedsOnSecondAttempt()
+```
+
+#### 6: Fallback Model Router
+- Scenario: Route AI inference requests to a fallback endpoint if the primary endpoint fails a health check.
+
+Expected Handling: Implement HealthCheckStub in UnitTests/Stubs/. Write ```ResolveEndpoint(string primaryUrl, string fallbackUrl)```. Call _healthCheck.IsEndpointHealthy(primaryUrl). If true, return primaryUrl; otherwise return fallbackUrl.
+```csharp 
+[Theory]
+[InlineData(true, "https://primary.ai")]
+[InlineData(false, "https://fallback.ai")]
+public void ResolveEndpoint_EvaluatesPrimaryHealth_RoutesToCorrectEndpoint(bool isPrimaryHealthy, string expectedEndpoint)
+```
+
+#### 7: Threshold-Based Email Dispatcher
+- Scenario: Dispatch emergency email notifications only when token usage exceeds a specified quota.
+
+Expected Handling: Implement EmailDispatcherSpyStub in UnitTests/Stubs/ capturing List<string> SentEmails. Write ```EvaluateUsageAndAlert(string recipient, int tokensUsed, int threshold)```. If tokensUsed > threshold, call _dispatcher.SendEmail(...).
+```csharp 
+[Theory]
+[InlineData(60000, 50000, 1)] // Over threshold -> 1 email dispatched
+[InlineData(40000, 50000, 0)] // Under threshold -> 0 emails dispatched
+public void EvaluateUsageAndAlert_SendsEmailOnlyWhenExceedingThreshold(int tokensUsed, int threshold, int expectedDispatches)
+```
+
+#### 8: Hardware Sensor Temperature Safety Interlock
+- Scenario: Prevent starting heavy model training workloads if GPU hardware sensors report excessive heat.
+
+Expected Handling: Expected Handling: Implement FixedTemperatureSensorStub in UnitTests/Stubs/. Write CanRunInference(). Query _sensor.ReadGpuTemperatureCelsius(). Return true if temperature =< 80, otherwise false.
+```csharp 
+[Theory]
+[InlineData(75.5, true)]
+[InlineData(82.0, false)]
+public void CanRunInference_ValidatesGpuTemperatureThreshold(double gpuTemp, bool expectedResult)
+```
 
