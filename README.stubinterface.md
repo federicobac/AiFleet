@@ -30,3 +30,10 @@ These exercises are found in the AiFleetIntegrationServiceTests.cs and the logic
 
 ### Exercises 5-8
 These exercises should be created in the AiFleetIntegrationServiceTests.cs and the logic should be implemented in the AiFleetIntegrationService.cs. These exercises will have the Test Header (Signature and Attributes). Your job is to fill in the test body, stub and interface, and then write the code to make it pass.
+
+#### 5: Currency Conversion Rate Double
+- Scenario: Convert USD billing totals into foreign currencies using a stubbed exchange rate provider.
+Interface should contain:  ```decimal GetExchangeRate(string currencyCode); ```
+
+Expected Handling: Implement FixedExchangeRateStub in UnitTests/Stubs/. Write ```ConvertInvoiceToCurrency(decimal amountInUsd, string targetCurrency)```. Fetch rate using _exchangeRateProvider.GetExchangeRate(targetCurrency) and return amountInUsd * rate.
+
