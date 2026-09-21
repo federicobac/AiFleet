@@ -43,6 +43,24 @@ public class AiFleetBillingServiceTests
         decimal result = service.CalculateBatchJobCost(100000);
         Assert.Equal(expected, result);
     }
+    
+    //Exercise 19
+    [Theory]
+    [InlineData(30, true)]
+    [InlineData(15, false)]
+    public void AreUnusedCreditsExpired_ReturnsCorrectResult(
+        int day, bool expected)
+    {
+        var clock = new FakeClock
+        {
+            UtcNow = new DateTime(2026, 09, day, 14, 0, 0)
+        };
+        
+        var service = new AiFleetBillingService(clock);
+        bool result = service.AreUnusedCreditsExpired();
+        Assert.Equal(expected, result);
+    }
+
 }
 
 

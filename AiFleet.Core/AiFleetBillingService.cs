@@ -2,7 +2,7 @@
 
 namespace AiFleet.Core;
 
-//Exercise 17
+//Exercise 17 + 18
 public class AiFleetBillingService
 {
     private readonly IClock _clock;
@@ -28,5 +28,13 @@ public class AiFleetBillingService
         }
 
         return cost;
+    }
+
+    //Exercise 19
+    public bool AreUnusedCreditsExpired()
+    {
+        var today = _clock.UtcNow.Date;
+        int lastDay = DateTime.DaysInMonth(today.Year, today.Month);
+        return today.Day == lastDay;
     }
 }
