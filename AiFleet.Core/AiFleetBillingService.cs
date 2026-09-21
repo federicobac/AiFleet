@@ -20,7 +20,13 @@ public class AiFleetBillingService
 
         if (hour >= 22 || hour < 4)
             cost *= 0.5m;
-        
+
+        if (_clock.UtcNow.DayOfWeek == DayOfWeek.Saturday ||
+            _clock.UtcNow.DayOfWeek == DayOfWeek.Sunday)
+        {
+            cost += 10m;
+        }
+
         return cost;
     }
 }

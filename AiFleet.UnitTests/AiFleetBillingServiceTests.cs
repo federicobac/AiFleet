@@ -17,14 +17,34 @@ public class AiFleetBillingServiceTests
     {
         var clock = new FakeClock
         {
-            UtcNow = new DateTime(2026, 09, 20, 23, 0, 0)
+            UtcNow = new DateTime(2026, 09, 21, hour, 0, 0)
         };
 
         var service = new AiFleetBillingService(clock);
         decimal result = service.CalculateBatchJobCost(100000);
-        Assert.Equal(1.00m, result);
+        Assert.Equal(expected, result);
+    }
+    
+    //Exercise 18
+    [Theory]
+    [InlineData(19, 12.00)] //saturday
+    [InlineData(20, 12.00)] //sunday
+    [InlineData(18, 2.00)] //friday
+    [InlineData(21, 2.00)] //monday
+    public void CalculateBatchJobCost_AppliesWeekendSurcharge(
+        int day, decimal expected)
+    {
+        var clock = new FakeClock
+        {
+            UtcNow = new DateTime(2026, 09, day, 14, 0, 0)
+        };
+        
+        var service = new AiFleetBillingService(clock);
+        decimal result = service.CalculateBatchJobCost(100000);
+        Assert.Equal(expected, result);
     }
 }
+
 
 public class FakeClock : IClock
 {
