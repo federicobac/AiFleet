@@ -60,6 +60,28 @@ public class AiFleetBillingServiceTests
         bool result = service.AreUnusedCreditsExpired();
         Assert.Equal(expected, result);
     }
+    
+    //Exercise 20
+    [Theory]
+    [InlineData(21, 15, 15.00)] //Monday 15:00
+    [InlineData(22, 16, 15.00)] //Tuesday 16:00
+    [InlineData(23, 17, 15.00)] //Wednesday 17:00
+    [InlineData(24, 14, 15.00)] //Thursday 14:00
+    [InlineData(25, 13, 10.00)] //Friday 10:00
+    [InlineData(26, 18, 10.00)] //Saturday 18:00
+    [InlineData(27, 15, 10.00)] //Sunday 15:00
+    public void CalculateSurgeCost_AppliesWeejdaySurge(
+        int day, int hour, decimal expected)
+    {
+        var clock = new FakeClock()
+        {
+            UtcNow = new DateTime(2026, 09, day, hour, 0, 0)
+        };
+
+        var service = new AiFleetBillingService(clock);
+        decimal result = service.CalculateSurgeCost(10m);
+        Assert.Equal(expected, result);
+    }
 
 }
 

@@ -19,7 +19,7 @@ Why It Helps AI Agents: AI coding agents excel at writing implementations when g
 ---  
 
 ## Exercises
-This repository contains 16 exercises. They vary in difficulty, and description. The further along you get, the less handrails will be present and the more you will have to lean on the previous exercises as examples.
+This repository contains 20 exercises. They vary in difficulty, and description. The further along you get, the less handrails will be present and the more you will have to lean on the previous exercises as examples.
 
 ### Exercises 1-5
 These exercises are found in the BasicAiFleetServiceTests.cs and the logic should be implemented in the BasicAiFleetService.cs. The tests are written, but you will have to add the functions and logic to make the tests pass.

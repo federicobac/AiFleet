@@ -37,4 +37,24 @@ public class AiFleetBillingService
         int lastDay = DateTime.DaysInMonth(today.Year, today.Month);
         return today.Day == lastDay;
     }
+
+    //Exercise 20
+    public decimal CalculateSurgeCost(decimal baseCost)
+    {
+        var now = _clock.UtcNow;
+
+        //is it a weekday?
+        bool isWeekday =
+            now.DayOfWeek >= DayOfWeek.Monday &&
+            now.DayOfWeek <= DayOfWeek.Friday;
+
+        //is it between 14:00 and 17:00?
+        bool isSurgePeriod =
+            now.Hour >= 14 && now.Hour < 18;
+
+        if (isWeekday && isSurgePeriod)
+            return baseCost * 1.5m;
+
+        return baseCost;
+    }
 }
